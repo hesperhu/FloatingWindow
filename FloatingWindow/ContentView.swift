@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isShow = false
+    @State var isShowBlendingWindow = false
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Button("显示浮动窗口") {
+                isShow.toggle()
+            }
+            .floatingView(isShow: $isShow) {
+                ZStack {
+                    Rectangle().fill(.white)
+                    Text("浮动大窗")
+                }
+            }
+            Button("浮动玻璃窗口") {
+                isShowBlendingWindow.toggle()
+            }.floatingView(isShow: $isShowBlendingWindow) {
+                VisualEffectView(material: .sidebar, blendingMode: .behindWindow, state: .active, emphasized: false)
+            }
         }
-        .padding()
+        
+
     }
 }
 
